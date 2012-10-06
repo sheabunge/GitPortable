@@ -1,0 +1,2304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.5.2" />
+<title>git(1)</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revnumber, span#revdate, span#revremark {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #dddddd;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toc {
+  margin-bottom: 2.5em;
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Overrides for manpage documents */
+h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+h2 {
+  border-style: none;
+}
+div.sectionbody {
+  margin-left: 5%;
+}
+
+@media print {
+  div#toc { display: none; }
+}
+
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+window.onload = function(){asciidoc.footnotes();}
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  var cont = document.getElementById("content");
+  var noteholder = document.getElementById("footnotes");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      // Use [\s\S] in place of . so multi-line matches work.
+      // Because JavaScript has no s (dotall) regex flag.
+      note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      spans[i].innerHTML =
+        "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+        "' title='View footnote' class='footnote'>" + n + "</a>]";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+}
+
+}
+/*]]>*/
+</script>
+</head>
+<body>
+<div id="header">
+<h1>
+git(1) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>git -
+   the stupid content tracker
+</p>
+</div>
+</div>
+<div id="content">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="verseblock">
+<div class="verseblock-content"><em>git</em> [--version] [--help] [-c &lt;name&gt;=&lt;value&gt;]
+    [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
+    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+    [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;] [--namespace=&lt;name&gt;]
+    &lt;command&gt; [&lt;args&gt;]</div>
+<div class="verseblock-attribution">
+</div></div>
+</div>
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Git is a fast, scalable, distributed revision control system with an
+unusually rich command set that provides both high-level operations
+and full access to internals.</p></div>
+<div class="paragraph"><p>See  to get started, then see
+<a href="everyday.html">Everyday Git</a> for a useful minimum set of commands, and
+"man git-commandname" for documentation of each command.  CVS users may
+also want to read .  See
+the <a href="user-manual.html">Git User&#8217;s Manual</a> for a more in-depth
+introduction.</p></div>
+<div class="paragraph"><p>The <em>&lt;command&gt;</em> is either a name of a Git command (see below) or an alias
+as defined in the configuration file (see ).</p></div>
+<div class="paragraph"><p>Formatted and hyperlinked version of the latest git
+documentation can be viewed at
+<tt>http://www.kernel.org/pub/software/scm/git/docs/</tt>.</p></div>
+</div>
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+--version
+</dt>
+<dd>
+<p>
+        Prints the git suite version that the <em>git</em> program came from.
+</p>
+</dd>
+<dt class="hdlist1">
+--help
+</dt>
+<dd>
+<p>
+        Prints the synopsis and a list of the most commonly used
+        commands. If the option <em>--all</em> or <em>-a</em> is given then all
+        available commands are printed. If a git command is named this
+        option will bring up the manual page for that command.
+</p>
+<div class="paragraph"><p>Other options are available to control how the manual page is
+displayed. See  for more information,
+because <tt>git --help ...</tt> is converted internally into <tt>git
+help ...</tt>.</p></div>
+</dd>
+<dt class="hdlist1">
+-c &lt;name&gt;=&lt;value&gt;
+</dt>
+<dd>
+<p>
+        Pass a configuration parameter to the command. The value
+        given will override values from configuration files.
+        The &lt;name&gt; is expected in the same format as listed by
+        <em>git config</em> (subkeys separated by dots).
+</p>
+</dd>
+<dt class="hdlist1">
+--exec-path[=&lt;path&gt;]
+</dt>
+<dd>
+<p>
+        Path to wherever your core git programs are installed.
+        This can also be controlled by setting the GIT_EXEC_PATH
+        environment variable. If no path is given, <em>git</em> will print
+        the current setting and then exit.
+</p>
+</dd>
+<dt class="hdlist1">
+--html-path
+</dt>
+<dd>
+<p>
+        Print the path, without trailing slash, where git&#8217;s HTML
+        documentation is installed and exit.
+</p>
+</dd>
+<dt class="hdlist1">
+--man-path
+</dt>
+<dd>
+<p>
+        Print the manpath (see <tt>man(1)</tt>) for the man pages for
+        this version of git and exit.
+</p>
+</dd>
+<dt class="hdlist1">
+--info-path
+</dt>
+<dd>
+<p>
+        Print the path where the Info files documenting this
+        version of git are installed and exit.
+</p>
+</dd>
+<dt class="hdlist1">
+-p
+</dt>
+<dt class="hdlist1">
+--paginate
+</dt>
+<dd>
+<p>
+        Pipe all output into <em>less</em> (or if set, $PAGER) if standard
+        output is a terminal.  This overrides the <tt>pager.&lt;cmd&gt;</tt>
+        configuration options (see the "Configuration Mechanism" section
+        below).
+</p>
+</dd>
+<dt class="hdlist1">
+--no-pager
+</dt>
+<dd>
+<p>
+        Do not pipe git output into a pager.
+</p>
+</dd>
+<dt class="hdlist1">
+--git-dir=&lt;path&gt;
+</dt>
+<dd>
+<p>
+        Set the path to the repository. This can also be controlled by
+        setting the GIT_DIR environment variable. It can be an absolute
+        path or relative path to current working directory.
+</p>
+</dd>
+<dt class="hdlist1">
+--work-tree=&lt;path&gt;
+</dt>
+<dd>
+<p>
+        Set the path to the working tree. It can be an absolute path
+        or a path relative to the current working directory.
+        This can also be controlled by setting the GIT_WORK_TREE
+        environment variable and the core.worktree configuration
+        variable (see core.worktree in  for a
+        more detailed discussion).
+</p>
+</dd>
+<dt class="hdlist1">
+--namespace=&lt;path&gt;
+</dt>
+<dd>
+<p>
+        Set the git namespace.  See  for more
+        details.  Equivalent to setting the <tt>GIT_NAMESPACE</tt> environment
+        variable.
+</p>
+</dd>
+<dt class="hdlist1">
+--bare
+</dt>
+<dd>
+<p>
+        Treat the repository as a bare repository.  If GIT_DIR
+        environment is not set, it is set to the current working
+        directory.
+</p>
+</dd>
+<dt class="hdlist1">
+--no-replace-objects
+</dt>
+<dd>
+<p>
+        Do not use replacement refs to replace git objects. See
+         for more information.
+</p>
+</dd>
+</dl></div>
+</div>
+<h2 id="_further_documentation">FURTHER DOCUMENTATION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>See the references above to get started using git.  The following is
+probably more detail than necessary for a first-time user.</p></div>
+<div class="paragraph"><p>The <a href="user-manual.html#git-concepts">git concepts chapter of the
+user-manual</a> and  both provide
+introductions to the underlying git architecture.</p></div>
+<div class="paragraph"><p>See  for an overview of recommended workflows.</p></div>
+<div class="paragraph"><p>See also the <a href="howto-index.html">howto</a> documents for some useful
+examples.</p></div>
+<div class="paragraph"><p>The internals are documented in the
+<a href="technical/api-index.html">GIT API documentation</a>.</p></div>
+</div>
+<h2 id="_git_commands">GIT COMMANDS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>We divide git into high level ("porcelain") commands and low level
+("plumbing") commands.</p></div>
+</div>
+<h2 id="_high_level_commands_porcelain">High-level commands (porcelain)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>We separate the porcelain commands into the main commands and some
+ancillary user utilities.</p></div>
+<h3 id="_main_porcelain_commands">Main porcelain commands</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Add file contents to the index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Apply a series of patches from a mailbox.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create an archive of files from a named tree.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Find by binary search the change that introduced a bug.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        List, create, or delete branches.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Move objects and refs by archive.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Checkout a branch or paths to the working tree.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Apply the changes introduced by some existing commits.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Graphical alternative to git-commit.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Remove untracked files from the working tree.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Clone a repository into a new directory.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Record changes to the repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show the most recent tag that is reachable from a commit.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show changes between commits, commit and working tree, etc.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Download objects and refs from another repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Prepare patches for e-mail submission.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Cleanup unnecessary files and optimize the local repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Print lines matching a pattern.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        A portable graphical interface to Git.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create an empty git repository or reinitialize an existing one.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show commit logs.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Join two or more development histories together.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Move or rename a file, a directory, or a symlink.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Add or inspect object notes.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Fetch from and merge with another repository or a local branch.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Update remote refs along with associated objects.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Forward-port local commits to the updated upstream head.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Reset current HEAD to the specified state.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Revert some existing commits.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Remove files from the working tree and from the index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Summarize <em>git log</em> output.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show various types of objects.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Stash the changes in a dirty working directory away.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show the working tree status.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Initialize, update or inspect submodules.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create, list, delete or verify a tag object signed with GPG.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        The git repository browser.
+</p>
+</dd>
+</dl></div>
+<h3 id="_ancillary_commands">Ancillary Commands</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Manipulators:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Get and set repository or global options.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Git data exporter.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Backend for fast Git data importers.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Rewrite branches.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        (deprecated) Recover lost refs that luckily have not yet been pruned.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Run merge conflict resolution tools to resolve merge conflicts.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Pack heads and tags for efficient repository access.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Prune all unreachable objects from the object database.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Manage reflog information.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Hardlink common objects in local repositories.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        manage set of tracked repositories.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Pack unpacked objects in a repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create, list, delete refs to replace objects.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        (deprecated) Get and set repository or global options.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Interrogators:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Annotate file lines with commit information.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show what revision and author last modified each line of a file.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Find commits not merged upstream.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Count unpacked number of objects and their disk consumption.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show changes using common diff tools.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Verifies the connectivity and validity of the objects in the database.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Extract commit ID from an archive created using git-archive.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        display help information about git.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Instantly browse your working repository in gitweb.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show three-way merge without touching index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Reuse recorded resolution of conflicted merges.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Pick out and massage parameters.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show branches and their commits.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Check the GPG signature of tags.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show logs with difference each commit introduces.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Git web interface (web frontend to Git repositories).
+</p>
+</dd>
+</dl></div>
+<h3 id="_interacting_with_others">Interacting with Others</h3><div style="clear:left"></div>
+<div class="paragraph"><p>These commands are to interact with foreign SCM and with other
+people via patch over e-mail.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Import an Arch repository into git.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Export a single commit to a CVS checkout.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Salvage your data out of another SCM people love to hate.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        A CVS server emulator for git.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Send a collection of patches from stdin to an IMAP folder.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Import from and submit to Perforce repositories.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Applies a quilt patchset onto the current branch.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Generates a summary of pending changes.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Send a collection of patches as emails.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Bidirectional operation between a Subversion repository and git.
+</p>
+</dd>
+</dl></div>
+</div>
+<h2 id="_low_level_commands_plumbing">Low-level commands (plumbing)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Although git includes its
+own porcelain layer, its low-level commands are sufficient to support
+development of alternative porcelains.  Developers of such porcelains
+might start by reading about  and
+.</p></div>
+<div class="paragraph"><p>The interface (input, output, set of options and the semantics)
+to these low-level commands are meant to be a lot more stable
+than Porcelain level commands, because these commands are
+primarily for scripted use.  The interface to Porcelain commands
+on the other hand are subject to change in order to improve the
+end user experience.</p></div>
+<div class="paragraph"><p>The following description divides
+the low-level commands into commands that manipulate objects (in
+the repository, index, and working tree), commands that interrogate and
+compare objects, and commands that move objects and references between
+repositories.</p></div>
+<h3 id="_manipulation_commands">Manipulation commands</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Apply a patch to files and/or to the index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Copy files from the index to the working tree.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create a new commit object.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Compute object ID and optionally creates a blob from a file.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Build pack index file for an existing packed archive.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Run a three-way file merge.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Run a merge for files needing merging.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Creates a tag object.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Build a tree-object from ls-tree formatted text.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create a packed archive of objects.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Remove extra objects that are already in pack files.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Reads tree information into the index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Read and modify symbolic refs.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Unpack objects from a packed archive.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Register file contents in the working tree to the index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Update the object name stored in a ref safely.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Create a tree object from the current index.
+</p>
+</dd>
+</dl></div>
+<h3 id="_interrogation_commands">Interrogation commands</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Provide content or type and size information for repository objects.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Compares files in the working tree and the index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Compares content and mode of blobs between the index and repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Compares the content and mode of blobs found via two tree objects.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Output information on each ref.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show information about files in the index and the working tree.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        List references in a remote repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        List the contents of a tree object.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Find as good common ancestors as possible for a merge.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Find symbolic names for given revs.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Find redundant pack files.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Lists commit objects in reverse chronological order.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show packed archive index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        List references in a local repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        (deprecated) Create a tar archive of the files in the named tree object.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Creates a temporary file with a blob&#8217;s contents.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Show a git logical variable.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Validate packed git archive files.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>In general, the interrogate commands do not touch the files in
+the working tree.</p></div>
+<h3 id="_synching_repositories">Synching repositories</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        A really simple server for git repositories.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Receive missing objects from another repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Server side implementation of Git over HTTP.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Push objects over git protocol to another repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Update auxiliary info file to help dumb servers.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The following are helper commands used by the above; end users
+typically do not use them directly.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Download from a remote git repository via HTTP.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Push objects over HTTP/DAV to another repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Routines to help parsing remote repository access parameters.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Receive what is pushed into the repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Restricted login shell for Git-only SSH access.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Send archive back to git-archive.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Send objects packed back to git-fetch-pack.
+</p>
+</dd>
+</dl></div>
+<h3 id="_internal_helper_commands">Internal helper commands</h3><div style="clear:left"></div>
+<div class="paragraph"><p>These are internal helper commands used by other commands; end
+users typically do not use them directly.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Display gitattributes information.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Ensures that a reference name is well formed.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Display data in columns.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Produce a merge commit message.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Extracts patch and authorship from a single e-mail message.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Simple UNIX mbox splitter program.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        The standard helper program to use with git-merge-index.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Compute unique ID for a patch.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        (deprecated) List the references in a remote repository.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Common git shell script setup code.
+</p>
+</dd>
+<dt class="hdlist1">
+</dt>
+<dd>
+<p>
+        Remove unnecessary whitespace.
+</p>
+</dd>
+</dl></div>
+</div>
+<h2 id="_configuration_mechanism">Configuration Mechanism</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Starting from 0.99.9 (actually mid 0.99.8.GIT), <tt>.git/config</tt> file
+is used to hold per-repository configuration options.  It is a
+simple text file modeled after <tt>.ini</tt> format familiar to some
+people.  Here is an example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>#
+# A '#' or ';' character indicates a comment.
+#
+
+; core variables
+[core]
+        ; Don't trust file modes
+        filemode = false
+
+; user identity
+[user]
+        name = "Junio C Hamano"
+        email = "junkio@twinsun.com"</tt></pre>
+</div></div>
+<div class="paragraph"><p>Various commands read from the configuration file and adjust
+their operation accordingly.  See  for a
+list.</p></div>
+</div>
+<h2 id="_identifier_terminology">Identifier Terminology</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+&lt;object&gt;
+</dt>
+<dd>
+<p>
+        Indicates the object name for any type of object.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;blob&gt;
+</dt>
+<dd>
+<p>
+        Indicates a blob object name.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;tree&gt;
+</dt>
+<dd>
+<p>
+        Indicates a tree object name.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;commit&gt;
+</dt>
+<dd>
+<p>
+        Indicates a commit object name.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;tree-ish&gt;
+</dt>
+<dd>
+<p>
+        Indicates a tree, commit or tag object name.  A
+        command that takes a &lt;tree-ish&gt; argument ultimately wants to
+        operate on a &lt;tree&gt; object but automatically dereferences
+        &lt;commit&gt; and &lt;tag&gt; objects that point at a &lt;tree&gt;.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;commit-ish&gt;
+</dt>
+<dd>
+<p>
+        Indicates a commit or tag object name.  A
+        command that takes a &lt;commit-ish&gt; argument ultimately wants to
+        operate on a &lt;commit&gt; object but automatically dereferences
+        &lt;tag&gt; objects that point at a &lt;commit&gt;.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;type&gt;
+</dt>
+<dd>
+<p>
+        Indicates that an object type is required.
+        Currently one of: <tt>blob</tt>, <tt>tree</tt>, <tt>commit</tt>, or <tt>tag</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;file&gt;
+</dt>
+<dd>
+<p>
+        Indicates a filename - almost always relative to the
+        root of the tree structure <tt>GIT_INDEX_FILE</tt> describes.
+</p>
+</dd>
+</dl></div>
+</div>
+<h2 id="_symbolic_identifiers">Symbolic Identifiers</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Any git command accepting any &lt;object&gt; can also use the following
+symbolic notation:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+HEAD
+</dt>
+<dd>
+<p>
+        indicates the head of the current branch.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;tag&gt;
+</dt>
+<dd>
+<p>
+        a valid tag <em>name</em>
+        (i.e. a <tt>refs/tags/&lt;tag&gt;</tt> reference).
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;head&gt;
+</dt>
+<dd>
+<p>
+        a valid head <em>name</em>
+        (i.e. a <tt>refs/heads/&lt;head&gt;</tt> reference).
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>For a more complete list of ways to spell object names, see
+"SPECIFYING REVISIONS" section in .</p></div>
+</div>
+<h2 id="_file_directory_structure">File/Directory Structure</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Please see the  document.</p></div>
+<div class="paragraph"><p>Read  for more details about each hook.</p></div>
+<div class="paragraph"><p>Higher level SCMs may provide and manage additional information in the
+<tt>$GIT_DIR</tt>.</p></div>
+</div>
+<h2 id="_terminology">Terminology</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Please see .</p></div>
+</div>
+<h2 id="_environment_variables">Environment Variables</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Various git commands use the following environment variables:</p></div>
+<h3 id="_the_git_repository">The git Repository</h3><div style="clear:left"></div>
+<div class="paragraph"><p>These environment variables apply to <em>all</em> core git commands. Nb: it
+is worth noting that they may be used/overridden by SCMS sitting above
+git so take care if using Cogito etc.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<em>GIT_INDEX_FILE</em>
+</dt>
+<dd>
+<p>
+        This environment allows the specification of an alternate
+        index file. If not specified, the default of <tt>$GIT_DIR/index</tt>
+        is used.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_OBJECT_DIRECTORY</em>
+</dt>
+<dd>
+<p>
+        If the object storage directory is specified via this
+        environment variable then the sha1 directories are created
+        underneath - otherwise the default <tt>$GIT_DIR/objects</tt>
+        directory is used.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_ALTERNATE_OBJECT_DIRECTORIES</em>
+</dt>
+<dd>
+<p>
+        Due to the immutable nature of git objects, old objects can be
+        archived into shared, read-only directories. This variable
+        specifies a ":" separated (on Windows ";" separated) list
+        of git object directories which can be used to search for git
+        objects. New objects will not be written to these directories.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_DIR</em>
+</dt>
+<dd>
+<p>
+        If the <em>GIT_DIR</em> environment variable is set then it
+        specifies a path to use instead of the default <tt>.git</tt>
+        for the base of the repository.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_WORK_TREE</em>
+</dt>
+<dd>
+<p>
+        Set the path to the working tree.  The value will not be
+        used in combination with repositories found automatically in
+        a .git directory (i.e. $GIT_DIR is not set).
+        This can also be controlled by the <em>--work-tree</em> command line
+        option and the core.worktree configuration variable.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_NAMESPACE</em>
+</dt>
+<dd>
+<p>
+        Set the git namespace; see  for details.
+        The <em>--namespace</em> command-line option also sets this value.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_CEILING_DIRECTORIES</em>
+</dt>
+<dd>
+<p>
+        This should be a colon-separated list of absolute paths.
+        If set, it is a list of directories that git should not chdir
+        up into while looking for a repository directory.
+        It will not exclude the current working directory or
+        a GIT_DIR set on the command line or in the environment.
+        (Useful for excluding slow-loading network directories.)
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_DISCOVERY_ACROSS_FILESYSTEM</em>
+</dt>
+<dd>
+<p>
+        When run in a directory that does not have ".git" repository
+        directory, git tries to find such a directory in the parent
+        directories to find the top of the working tree, but by default it
+        does not cross filesystem boundaries.  This environment variable
+        can be set to true to tell git not to stop at filesystem
+        boundaries.  Like <em>GIT_CEILING_DIRECTORIES</em>, this will not affect
+        an explicit repository directory set via <em>GIT_DIR</em> or on the
+        command line.
+</p>
+</dd>
+</dl></div>
+<h3 id="_git_commits">git Commits</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<em>GIT_AUTHOR_NAME</em>
+</dt>
+<dt class="hdlist1">
+<em>GIT_AUTHOR_EMAIL</em>
+</dt>
+<dt class="hdlist1">
+<em>GIT_AUTHOR_DATE</em>
+</dt>
+<dt class="hdlist1">
+<em>GIT_COMMITTER_NAME</em>
+</dt>
+<dt class="hdlist1">
+<em>GIT_COMMITTER_EMAIL</em>
+</dt>
+<dt class="hdlist1">
+<em>GIT_COMMITTER_DATE</em>
+</dt>
+<dt class="hdlist1">
+<em>EMAIL</em>
+</dt>
+<dd>
+<p>
+        see 
+</p>
+</dd>
+</dl></div>
+<h3 id="_git_diffs">git Diffs</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<em>GIT_DIFF_OPTS</em>
+</dt>
+<dd>
+<p>
+        Only valid setting is "--unified=??" or "-u??" to set the
+        number of context lines shown when a unified diff is created.
+        This takes precedence over any "-U" or "--unified" option
+        value passed on the git diff command line.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_EXTERNAL_DIFF</em>
+</dt>
+<dd>
+<p>
+        When the environment variable <em>GIT_EXTERNAL_DIFF</em> is set, the
+        program named by it is called, instead of the diff invocation
+        described above.  For a path that is added, removed, or modified,
+        <em>GIT_EXTERNAL_DIFF</em> is called with 7 parameters:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>path old-file old-hex old-mode new-file new-hex new-mode</tt></pre>
+</div></div>
+<div class="paragraph"><p>where:</p></div>
+</dd>
+<dt class="hdlist1">
+&lt;old|new&gt;-file
+</dt>
+<dd>
+<p>
+are files GIT_EXTERNAL_DIFF can use to read the
+                         contents of &lt;old|new&gt;,
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;old|new&gt;-hex
+</dt>
+<dd>
+<p>
+are the 40-hexdigit SHA1 hashes,
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;old|new&gt;-mode
+</dt>
+<dd>
+<p>
+are the octal representation of the file modes.
+</p>
+<div class="paragraph"><p>The file parameters can point at the user&#8217;s working file
+(e.g. <tt>new-file</tt> in "git-diff-files"), <tt>/dev/null</tt> (e.g. <tt>old-file</tt>
+when a new file is added), or a temporary file (e.g. <tt>old-file</tt> in the
+index).  <em>GIT_EXTERNAL_DIFF</em> should not worry about unlinking the
+temporary file --- it is removed when <em>GIT_EXTERNAL_DIFF</em> exits.</p></div>
+<div class="paragraph"><p>For a path that is unmerged, <em>GIT_EXTERNAL_DIFF</em> is called with 1
+parameter, &lt;path&gt;.</p></div>
+</dd>
+</dl></div>
+<h3 id="_other">other</h3><div style="clear:left"></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<em>GIT_MERGE_VERBOSITY</em>
+</dt>
+<dd>
+<p>
+        A number controlling the amount of output shown by
+        the recursive merge strategy.  Overrides merge.verbosity.
+        See 
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_PAGER</em>
+</dt>
+<dd>
+<p>
+        This environment variable overrides <tt>$PAGER</tt>. If it is set
+        to an empty string or to the value "cat", git will not launch
+        a pager.  See also the <tt>core.pager</tt> option in
+        .
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_EDITOR</em>
+</dt>
+<dd>
+<p>
+        This environment variable overrides <tt>$EDITOR</tt> and <tt>$VISUAL</tt>.
+        It is used by several git commands when, on interactive mode,
+        an editor is to be launched. See also 
+        and the <tt>core.editor</tt> option in .
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_SSH</em>
+</dt>
+<dd>
+<p>
+        If this environment variable is set then <em>git fetch</em>
+        and <em>git push</em> will use this command instead
+        of <em>ssh</em> when they need to connect to a remote system.
+        The <em>$GIT_SSH</em> command will be given exactly two arguments:
+        the <em>username@host</em> (or just <em>host</em>) from the URL and the
+        shell command to execute on that remote system.
+</p>
+<div class="paragraph"><p>To pass options to the program that you want to list in GIT_SSH
+you will need to wrap the program and options into a shell script,
+then set GIT_SSH to refer to the shell script.</p></div>
+<div class="paragraph"><p>Usually it is easier to configure any desired options through your
+personal <tt>.ssh/config</tt> file.  Please consult your ssh documentation
+for further details.</p></div>
+</dd>
+<dt class="hdlist1">
+<em>GIT_ASKPASS</em>
+</dt>
+<dd>
+<p>
+        If this environment variable is set, then git commands which need to
+        acquire passwords or passphrases (e.g. for HTTP or IMAP authentication)
+        will call this program with a suitable prompt as command line argument
+        and read the password from its STDOUT. See also the <em>core.askpass</em>
+        option in .
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_FLUSH</em>
+</dt>
+<dd>
+<p>
+        If this environment variable is set to "1", then commands such
+        as <em>git blame</em> (in incremental mode), <em>git rev-list</em>, <em>git log</em>,
+        and <em>git whatchanged</em> will force a flush of the output stream
+        after each commit-oriented record have been flushed.   If this
+        variable is set to "0", the output of these commands will be done
+        using completely buffered I/O.   If this environment variable is
+        not set, git will choose buffered or record-oriented flushing
+        based on whether stdout appears to be redirected to a file or not.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>GIT_TRACE</em>
+</dt>
+<dd>
+<p>
+        If this variable is set to "1", "2" or "true" (comparison
+        is case insensitive), git will print <tt>trace:</tt> messages on
+        stderr telling about alias expansion, built-in command
+        execution and external command execution.
+        If this variable is set to an integer value greater than 1
+        and lower than 10 (strictly) then git will interpret this
+        value as an open file descriptor and will try to write the
+        trace messages into this file descriptor.
+        Alternatively, if this variable is set to an absolute path
+        (starting with a <em>/</em> character), git will interpret this
+        as a file path and will try to write the trace messages
+        into it.
+</p>
+</dd>
+</dl></div>
+</div>
+<h2 id="_discussion_a_id_discussion_a">Discussion<a id="Discussion"></a></h2>
+<div class="sectionbody">
+<div class="paragraph"><p>More detail on the following is available from the
+<a href="user-manual.html#git-concepts">git concepts chapter of the
+user-manual</a> and .</p></div>
+<div class="paragraph"><p>A git project normally consists of a working directory with a ".git"
+subdirectory at the top level.  The .git directory contains, among other
+things, a compressed object database representing the complete history
+of the project, an "index" file which links that history to the current
+contents of the working tree, and named pointers into that history such
+as tags and branch heads.</p></div>
+<div class="paragraph"><p>The object database contains objects of three main types: blobs, which
+hold file data; trees, which point to blobs and other trees to build up
+directory hierarchies; and commits, which each reference a single tree
+and some number of parent commits.</p></div>
+<div class="paragraph"><p>The commit, equivalent to what other systems call a "changeset" or
+"version", represents a step in the project&#8217;s history, and each parent
+represents an immediately preceding step.  Commits with more than one
+parent represent merges of independent lines of development.</p></div>
+<div class="paragraph"><p>All objects are named by the SHA1 hash of their contents, normally
+written as a string of 40 hex digits.  Such names are globally unique.
+The entire history leading up to a commit can be vouched for by signing
+just that commit.  A fourth object type, the tag, is provided for this
+purpose.</p></div>
+<div class="paragraph"><p>When first created, objects are stored in individual files, but for
+efficiency may later be compressed together into "pack files".</p></div>
+<div class="paragraph"><p>Named pointers called refs mark interesting points in history.  A ref
+may contain the SHA1 name of an object or the name of another ref.  Refs
+with names beginning <tt>ref/head/</tt> contain the SHA1 name of the most
+recent commit (or "head") of a branch under development.  SHA1 names of
+tags of interest are stored under <tt>ref/tags/</tt>.  A special ref named
+<tt>HEAD</tt> contains the name of the currently checked-out branch.</p></div>
+<div class="paragraph"><p>The index file is initialized with a list of all paths and, for each
+path, a blob object and a set of attributes.  The blob object represents
+the contents of the file as of the head of the current branch.  The
+attributes (last modified time, size, etc.) are taken from the
+corresponding file in the working tree.  Subsequent changes to the
+working tree can be found by comparing these attributes.  The index may
+be updated with new content, and new commits may be created from the
+content stored in the index.</p></div>
+<div class="paragraph"><p>The index is also capable of storing multiple entries (called "stages")
+for a given pathname.  These stages are used to hold the various
+unmerged version of a file when a merge is in progress.</p></div>
+</div>
+<h2 id="_authors">Authors</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Git was started by Linus Torvalds, and is currently maintained by Junio
+C Hamano. Numerous contributions have come from the git mailing list
+&lt;<a href="mailto:git@vger.kernel.org">git@vger.kernel.org</a>&gt;. For a more complete list of contributors, see
+<a href="http://git-scm.com/about">http://git-scm.com/about</a>. If you have a clone of git.git itself, the
+output of  and  can show you
+the authors for specific parts of the project.</p></div>
+</div>
+<h2 id="_reporting_bugs">Reporting Bugs</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Report bugs to the Git mailing list &lt;<a href="mailto:git@vger.kernel.org">git@vger.kernel.org</a>&gt; where the
+development and maintenance is primarily done.  You do not have to be
+subscribed to the list to send a message there.</p></div>
+</div>
+<h2 id="_see_also">SEE ALSO</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>, ,
+<a href="everyday.html">Everyday Git</a>, ,
+, ,
+, <a href="user-manual.html">The Git User&#8217;s Manual</a>,</p></div>
+</div>
+<h2 id="_git">GIT</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Part of the  suite</p></div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2012-06-19 16:36:49 PDT
+</div>
+</div>
+</body>
+</html>

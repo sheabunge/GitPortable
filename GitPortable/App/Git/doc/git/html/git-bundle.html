@@ -1,0 +1,805 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.5.2" />
+<title>git-bundle(1)</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revnumber, span#revdate, span#revremark {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #dddddd;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toc {
+  margin-bottom: 2.5em;
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Overrides for manpage documents */
+h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+h2 {
+  border-style: none;
+}
+div.sectionbody {
+  margin-left: 5%;
+}
+
+@media print {
+  div#toc { display: none; }
+}
+
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+window.onload = function(){asciidoc.footnotes();}
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  var cont = document.getElementById("content");
+  var noteholder = document.getElementById("footnotes");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      // Use [\s\S] in place of . so multi-line matches work.
+      // Because JavaScript has no s (dotall) regex flag.
+      note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      spans[i].innerHTML =
+        "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+        "' title='View footnote' class='footnote'>" + n + "</a>]";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+}
+
+}
+/*]]>*/
+</script>
+</head>
+<body>
+<div id="header">
+<h1>
+git-bundle(1) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>git-bundle -
+   Move objects and refs by archive
+</p>
+</div>
+</div>
+<div id="content">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="verseblock">
+<div class="verseblock-content"><em>git bundle</em> create &lt;file&gt; &lt;git-rev-list-args&gt;
+<em>git bundle</em> verify &lt;file&gt;
+<em>git bundle</em> list-heads &lt;file&gt; [&lt;refname&gt;&#8230;]
+<em>git bundle</em> unbundle &lt;file&gt; [&lt;refname&gt;&#8230;]</div>
+<div class="verseblock-attribution">
+</div></div>
+</div>
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Some workflows require that one or more branches of development on one
+machine be replicated on another machine, but the two machines cannot
+be directly connected, and therefore the interactive git protocols (git,
+ssh, rsync, http) cannot be used.  This command provides support for
+<em>git fetch</em> and <em>git pull</em> to operate by packaging objects and references
+in an archive at the originating machine, then importing those into
+another repository using <em>git fetch</em> and <em>git pull</em>
+after moving the archive by some means (e.g., by sneakernet).  As no
+direct connection between the repositories exists, the user must specify a
+basis for the bundle that is held by the destination repository: the
+bundle assumes that all objects in the basis are already in the
+destination repository.</p></div>
+</div>
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+create &lt;file&gt;
+</dt>
+<dd>
+<p>
+        Used to create a bundle named <em>file</em>.  This requires the
+        <em>git-rev-list-args</em> arguments to define the bundle contents.
+</p>
+</dd>
+<dt class="hdlist1">
+verify &lt;file&gt;
+</dt>
+<dd>
+<p>
+        Used to check that a bundle file is valid and will apply
+        cleanly to the current repository.  This includes checks on the
+        bundle format itself as well as checking that the prerequisite
+        commits exist and are fully linked in the current repository.
+        <em>git bundle</em> prints a list of missing commits, if any, and exits
+        with a non-zero status.
+</p>
+</dd>
+<dt class="hdlist1">
+list-heads &lt;file&gt;
+</dt>
+<dd>
+<p>
+        Lists the references defined in the bundle.  If followed by a
+        list of references, only references matching those given are
+        printed out.
+</p>
+</dd>
+<dt class="hdlist1">
+unbundle &lt;file&gt;
+</dt>
+<dd>
+<p>
+        Passes the objects in the bundle to <em>git index-pack</em>
+        for storage in the repository, then prints the names of all
+        defined references. If a list of references is given, only
+        references matching those in the list are printed. This command is
+        really plumbing, intended to be called only by <em>git fetch</em>.
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;git-rev-list-args&gt;
+</dt>
+<dd>
+<p>
+        A list of arguments, acceptable to <em>git rev-parse</em> and
+        <em>git rev-list</em> (and containing a named ref, see SPECIFYING REFERENCES
+        below), that specifies the specific objects and references
+        to transport.  For example, <tt>master~10..master</tt> causes the
+        current master reference to be packaged along with all objects
+        added since its 10th ancestor commit.  There is no explicit
+        limit to the number of references and objects that may be
+        packaged.
+</p>
+</dd>
+<dt class="hdlist1">
+[&lt;refname&gt;&#8230;]
+</dt>
+<dd>
+<p>
+        A list of references used to limit the references reported as
+        available. This is principally of use to <em>git fetch</em>, which
+        expects to receive only those references asked for and not
+        necessarily everything in the pack (in this case, <em>git bundle</em> acts
+        like <em>git fetch-pack</em>).
+</p>
+</dd>
+</dl></div>
+</div>
+<h2 id="_specifying_references">SPECIFYING REFERENCES</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><em>git bundle</em> will only package references that are shown by
+<em>git show-ref</em>: this includes heads, tags, and remote heads.  References
+such as <tt>master~1</tt> cannot be packaged, but are perfectly suitable for
+defining the basis.  More than one reference may be packaged, and more
+than one basis can be specified.  The objects packaged are those not
+contained in the union of the given bases.  Each basis can be
+specified explicitly (e.g. <tt>^master~10</tt>), or implicitly (e.g.
+<tt>master~10..master</tt>, <tt>--since=10.days.ago master</tt>).</p></div>
+<div class="paragraph"><p>It is very important that the basis used be held by the destination.
+It is okay to err on the side of caution, causing the bundle file
+to contain objects already in the destination, as these are ignored
+when unpacking at the destination.</p></div>
+</div>
+<h2 id="_example">EXAMPLE</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Assume you want to transfer the history from a repository R1 on machine A
+to another repository R2 on machine B.
+For whatever reason, direct connection between A and B is not allowed,
+but we can move data from A to B via some mechanism (CD, email, etc.).
+We want to update R2 with development made on the branch master in R1.</p></div>
+<div class="paragraph"><p>To bootstrap the process, you can first create a bundle that does not have
+any basis. You can use a tag to remember up to what commit you last
+processed, in order to make it easy to later update the other repository
+with an incremental bundle:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>machineA$ cd R1
+machineA$ git bundle create file.bundle master
+machineA$ git tag -f lastR2bundle master</tt></pre>
+</div></div>
+<div class="paragraph"><p>Then you transfer file.bundle to the target machine B. If you are creating
+the repository on machine B, then you can clone from the bundle as if it
+were a remote repository instead of creating an empty repository and then
+pulling or fetching objects from the bundle:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>machineB$ git clone /home/me/tmp/file.bundle R2</tt></pre>
+</div></div>
+<div class="paragraph"><p>This will define a remote called "origin" in the resulting repository that
+lets you fetch and pull from the bundle. The $GIT_DIR/config file in R2 will
+have an entry like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[remote "origin"]
+    url = /home/me/tmp/file.bundle
+    fetch = refs/heads/*:refs/remotes/origin/*</tt></pre>
+</div></div>
+<div class="paragraph"><p>To update the resulting mine.git repository, you can fetch or pull after
+replacing the bundle stored at /home/me/tmp/file.bundle with incremental
+updates.</p></div>
+<div class="paragraph"><p>After working some more in the original repository, you can create an
+incremental bundle to update the other repository:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>machineA$ cd R1
+machineA$ git bundle create file.bundle lastR2bundle..master
+machineA$ git tag -f lastR2bundle master</tt></pre>
+</div></div>
+<div class="paragraph"><p>You then transfer the bundle to the other machine to replace
+/home/me/tmp/file.bundle, and pull from it.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>machineB$ cd R2
+machineB$ git pull</tt></pre>
+</div></div>
+<div class="paragraph"><p>If you know up to what commit the intended recipient repository should
+have the necessary objects, you can use that knowledge to specify the
+basis, giving a cut-off point to limit the revisions and objects that go
+in the resulting bundle. The previous example used the lastR2bundle tag
+for this purpose, but you can use any other options that you would give to
+the  command. Here are more examples:</p></div>
+<div class="paragraph"><p>You can use a tag that is present in both:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git bundle create mybundle v1.0.0..master</tt></pre>
+</div></div>
+<div class="paragraph"><p>You can use a basis based on time:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git bundle create mybundle --since=10.days master</tt></pre>
+</div></div>
+<div class="paragraph"><p>You can use the number of commits:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git bundle create mybundle -10 master</tt></pre>
+</div></div>
+<div class="paragraph"><p>You can run <tt>git-bundle verify</tt> to see if you can extract from a bundle
+that was created with a basis:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git bundle verify mybundle</tt></pre>
+</div></div>
+<div class="paragraph"><p>This will list what commits you must have in order to extract from the
+bundle and will error out if you do not have them.</p></div>
+<div class="paragraph"><p>A bundle from a recipient repository&#8217;s point of view is just like a
+regular repository which it fetches or pulls from. You can, for example, map
+references when fetching:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git fetch mybundle master:localRef</tt></pre>
+</div></div>
+<div class="paragraph"><p>You can also see what references it offers:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git ls-remote mybundle</tt></pre>
+</div></div>
+</div>
+<h2 id="_git">GIT</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Part of the  suite</p></div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2012-05-02 15:00:44 PDT
+</div>
+</div>
+</body>
+</html>

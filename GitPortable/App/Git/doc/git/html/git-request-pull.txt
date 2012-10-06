@@ -1,0 +1,35 @@
+git-request-pull(1)
+===================
+
+NAME
+----
+git-request-pull - Generates a summary of pending changes
+
+SYNOPSIS
+--------
+[verse]
+'git request-pull' [-p] <start> <url> [<end>]
+
+DESCRIPTION
+-----------
+
+Summarizes the changes between two commits to the standard output, and includes
+the given URL in the generated summary.
+
+OPTIONS
+-------
+-p::
+	Show patch text
+
+<start>::
+	Commit to start at.
+
+<url>::
+	URL to include in the summary.
+
+<end>::
+	Commit to end at; defaults to HEAD.
+
+GIT
+---
+Part of the linkgit:git[1] suite

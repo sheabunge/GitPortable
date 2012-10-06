@@ -1,0 +1,781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.5.2" />
+<title>gitcli(7)</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revnumber, span#revdate, span#revremark {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #dddddd;
+  color: #777777;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toc {
+  margin-bottom: 2.5em;
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Overrides for manpage documents */
+h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+h2 {
+  border-style: none;
+}
+div.sectionbody {
+  margin-left: 5%;
+}
+
+@media print {
+  div#toc { display: none; }
+}
+
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+window.onload = function(){asciidoc.footnotes();}
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  var cont = document.getElementById("content");
+  var noteholder = document.getElementById("footnotes");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      // Use [\s\S] in place of . so multi-line matches work.
+      // Because JavaScript has no s (dotall) regex flag.
+      note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      spans[i].innerHTML =
+        "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+        "' title='View footnote' class='footnote'>" + n + "</a>]";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+}
+
+}
+/*]]>*/
+</script>
+</head>
+<body>
+<div id="header">
+<h1>
+gitcli(7) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>gitcli -
+   git command line interface and conventions
+</p>
+</div>
+</div>
+<div id="content">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>gitcli</p></div>
+</div>
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This manual describes the convention used throughout git CLI.</p></div>
+<div class="paragraph"><p>Many commands take revisions (most often "commits", but sometimes
+"tree-ish", depending on the context and command) and paths as their
+arguments.  Here are the rules:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Revisions come first and then paths.
+   E.g. in <tt>git diff v1.0 v2.0 arch/x86 include/asm-x86</tt>,
+   <tt>v1.0</tt> and <tt>v2.0</tt> are revisions and <tt>arch/x86</tt> and <tt>include/asm-x86</tt>
+   are paths.
+</p>
+</li>
+<li>
+<p>
+When an argument can be misunderstood as either a revision or a path,
+   they can be disambiguated by placing <tt>--</tt> between them.
+   E.g. <tt>git diff -- HEAD</tt> is, "I have a file called HEAD in my work
+   tree.  Please show changes between the version I staged in the index
+   and what I have in the work tree for that file". not "show difference
+   between the HEAD commit and the work tree as a whole".  You can say
+   <tt>git diff HEAD --</tt> to ask for the latter.
+</p>
+</li>
+<li>
+<p>
+Without disambiguating <tt>--</tt>, git makes a reasonable guess, but errors
+   out and asking you to disambiguate when ambiguous.  E.g. if you have a
+   file called HEAD in your work tree, <tt>git diff HEAD</tt> is ambiguous, and
+   you have to say either <tt>git diff HEAD --</tt> or <tt>git diff -- HEAD</tt> to
+   disambiguate.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>When writing a script that is expected to handle random user-input, it is
+a good practice to make it explicit which arguments are which by placing
+disambiguating <tt>--</tt> at appropriate places.</p></div>
+<div class="paragraph"><p>Here are the rules regarding the "flags" that you should follow when you are
+scripting git:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+it&#8217;s preferred to use the non dashed form of git commands, which means that
+   you should prefer <tt>git foo</tt> to <tt>git-foo</tt>.
+</p>
+</li>
+<li>
+<p>
+splitting short options to separate words (prefer <tt>git foo -a -b</tt>
+   to <tt>git foo -ab</tt>, the latter may not even work).
+</p>
+</li>
+<li>
+<p>
+when a command line option takes an argument, use the <em>sticked</em> form.  In
+   other words, write <tt>git foo -oArg</tt> instead of <tt>git foo -o Arg</tt> for short
+   options, and <tt>git foo --long-opt=Arg</tt> instead of <tt>git foo --long-opt Arg</tt>
+   for long options.  An option that takes optional option-argument must be
+   written in the <em>sticked</em> form.
+</p>
+</li>
+<li>
+<p>
+when you give a revision parameter to a command, make sure the parameter is
+   not ambiguous with a name of a file in the work tree.  E.g. do not write
+   <tt>git log -1 HEAD</tt> but write <tt>git log -1 HEAD --</tt>; the former will not work
+   if you happen to have a file called <tt>HEAD</tt> in the work tree.
+</p>
+</li>
+</ul></div>
+</div>
+<h2 id="_enhanced_option_parser">ENHANCED OPTION PARSER</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>From the git 1.5.4 series and further, many git commands (not all of them at the
+time of the writing though) come with an enhanced option parser.</p></div>
+<div class="paragraph"><p>Here is an exhaustive list of the facilities provided by this option parser.</p></div>
+<h3 id="_magic_options">Magic Options</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Commands which have the enhanced option parser activated all understand a
+couple of magic command line options:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+-h
+</dt>
+<dd>
+<p>
+        gives a pretty printed usage of the command.
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git describe -h
+usage: git describe [options] &lt;committish&gt;*
+
+    --contains            find the tag that comes after the commit
+    --debug               debug search strategy on stderr
+    --all                 use any ref in .git/refs
+    --tags                use any tag in .git/refs/tags
+    --abbrev [&lt;n&gt;]        use &lt;n&gt; digits to display SHA-1s
+    --candidates &lt;n&gt;      consider &lt;n&gt; most recent tags (default: 10)</tt></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+--help-all
+</dt>
+<dd>
+<p>
+        Some git commands take options that are only used for plumbing or that
+        are deprecated, and such options are hidden from the default usage. This
+        option gives the full list of options.
+</p>
+</dd>
+</dl></div>
+<h3 id="_negating_options">Negating options</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Options with long option names can be negated by prefixing <tt>--no-</tt>. For
+example, <tt>git branch</tt> has the option <tt>--track</tt> which is <em>on</em> by default. You
+can use <tt>--no-track</tt> to override that behaviour. The same goes for <tt>--color</tt>
+and <tt>--no-color</tt>.</p></div>
+<h3 id="_aggregating_short_options">Aggregating short options</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Commands that support the enhanced option parser allow you to aggregate short
+options. This means that you can for example use <tt>git rm -rf</tt> or
+<tt>git clean -fdx</tt>.</p></div>
+<h3 id="_separating_argument_from_the_option">Separating argument from the option</h3><div style="clear:left"></div>
+<div class="paragraph"><p>You can write the mandatory option parameter to an option as a separate
+word on the command line.  That means that all the following uses work:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git foo --long-opt=Arg
+$ git foo --long-opt Arg
+$ git foo -oArg
+$ git foo -o Arg</tt></pre>
+</div></div>
+<div class="paragraph"><p>However, this is <strong>NOT</strong> allowed for switches with an optional value, where the
+<em>sticked</em> form must be used:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ git describe --abbrev HEAD     # correct
+$ git describe --abbrev=10 HEAD  # correct
+$ git describe --abbrev 10 HEAD  # NOT WHAT YOU MEANT</tt></pre>
+</div></div>
+</div>
+<h2 id="_notes_on_frequently_confused_options">NOTES ON FREQUENTLY CONFUSED OPTIONS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Many commands that can work on files in the working tree
+and/or in the index can take <tt>--cached</tt> and/or <tt>--index</tt>
+options.  Sometimes people incorrectly think that, because
+the index was originally called cache, these two are
+synonyms.  They are <strong>not</strong>&#8201;&#8212;&#8201;these two options mean very
+different things.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <tt>--cached</tt> option is used to ask a command that
+   usually works on files in the working tree to <strong>only</strong> work
+   with the index.  For example, <tt>git grep</tt>, when used
+   without a commit to specify from which commit to look for
+   strings in, usually works on files in the working tree,
+   but with the <tt>--cached</tt> option, it looks for strings in
+   the index.
+</p>
+</li>
+<li>
+<p>
+The <tt>--index</tt> option is used to ask a command that
+   usually works on files in the working tree to <strong>also</strong>
+   affect the index.  For example, <tt>git stash apply</tt> usually
+   merges changes recorded in a stash to the working tree,
+   but with the <tt>--index</tt> option, it also merges changes to
+   the index as well.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p><tt>git apply</tt> command can be used with <tt>--cached</tt> and
+<tt>--index</tt> (but not at the same time).  Usually the command
+only affects the files in the working tree, but with
+<tt>--index</tt>, it patches both the files and their index
+entries, and with <tt>--cached</tt>, it modifies only the index
+entries.</p></div>
+<div class="paragraph"><p>See also <a href="http://marc.info/?l=git&amp;m=116563135620359">http://marc.info/?l=git&amp;m=116563135620359</a> and
+<a href="http://marc.info/?l=git&amp;m=119150393620273">http://marc.info/?l=git&amp;m=119150393620273</a> for further
+information.</p></div>
+</div>
+<h2 id="_git">GIT</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Part of the  suite</p></div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2012-05-02 15:00:44 PDT
+</div>
+</div>
+</body>
+</html>
