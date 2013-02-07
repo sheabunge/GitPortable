@@ -8,9 +8,7 @@ Git Portable is a portable version of [Git for Windows](https://github.com/git/g
 
 ## Installing
 
-The preferred method of installing Git Portable is the `.paf.exe` installer ([why?][why paf]).
-
-However, you can also copy the `GitPortable` directory to a location of your choice. 
+The preferred method of installing Git Portable is the `.paf.exe` installer ([why?][why paf]). However, you can also copy the `GitPortable` directory to a location of your choice. 
 
    [download link]: https://github.com/bungeshea/GitPortable/raw/master/GitPortable_1.8.1.2_Development_Test_1_online.paf.exe
    [why paf]: http://portableapps.com/about/what_is_a_portable_app#whypaf
