@@ -4,7 +4,7 @@ Git Portable is a portable version of [Git for Windows](https://github.com/git/g
 
 [Visit Git Portable Homepage at PortableApps.com](http://portableapps.com/node/34685)
 
-[**Download Git Portable 1.8.1.2 Development Test 2**](GitPortable_1.8.1.2_Development_Test_2_online.paf.exe)
+[**Download Git Portable 1.8.1.2 Development Test 3**](GitPortable_1.8.1.2_Development_Test_3_online.paf.exe)
 
 [Download Git Portable 1.8.1.2 Development Test 1](GitPortable_1.8.1.2_Development_Test_1_online.paf.exe)
 
