@@ -10,7 +10,12 @@ __[Download Git Portable 1.9.4 Development Test 1][download]__
 
 The preferred method of installing Git Portable is the `.paf.exe` installer ([why?][why paf]).
 
-However, you can also copy the `GitPortable` directory to a location of your choice. Remember to also download [PortableGit] to the `App/Git` directory when not using the online installer.
+However, you can also install Git Portable manually.
+
+1. Copy the `GitPortable` directory from this repository to a location of your choice. 
+2. Download [PortableGit] to the `App\Git` directory.
+3. Copy `App\misc\profile` file to `App\Git\etc`, overriding the already-present file.
+4. Copy the `App\misc\StartGitBash.bat` file to `App\Git`
 
  [download]: GitPortable_1.9.4_Development_Test_1_online.paf.exe?raw=true
  [homepage]: http://portableapps.com/node/34685
