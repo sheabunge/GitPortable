@@ -4,7 +4,7 @@ Git Portable is a portable version of [Git for Windows][Git] packaged in [Portab
 
 [Visit Git Portable Homepage at PortableApps.com][homepage]
 
-__[Download Git Portable 1.9.4 Development Test 1][download]__
+__[Download Git Portable 1.9.4 Development Test 2][download]__
 
 ## Installing
 
@@ -17,7 +17,7 @@ However, you can also install Git Portable manually.
 3. Copy `App\misc\profile` file to `App\Git\etc`, overriding the already-present file.
 4. Copy the `App\misc\StartGitBash.bat` file to `App\Git`
 
- [download]: GitPortable_1.9.4_Development_Test_1_online.paf.exe?raw=true
+ [download]: GitPortable_1.9.4_Development_Test_2_online.paf.exe?raw=true
  [homepage]: http://portableapps.com/node/34685
 
  [Git]: https://github.com/git/git
