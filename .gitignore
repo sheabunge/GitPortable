@@ -1,6 +1,9 @@
 # App data dir
 GitPortable/Data
 
+# App installers
+GitPortable_*.paf.exe
+
 # Windows junk
 Thumbs.db
 ehthumbs.db

@@ -17,7 +17,7 @@ However, you can also install Git Portable manually.
 3. Copy `App\misc\profile` file to `App\Git\etc`, overriding the already-present file.
 4. Copy the `App\misc\StartGitBash.bat` file to `App\Git`
 
- [download]: GitPortable_1.9.4_Development_Test_2_online.paf.exe?raw=true
+ [download]: https://github.com/bungeshea/GitPortable/releases/download/v1.9.4-devtest.2/GitPortable_1.9.4_Development_Test_2_online.paf.exe
  [homepage]: http://portableapps.com/node/34685
 
  [Git]: https://github.com/git/git
