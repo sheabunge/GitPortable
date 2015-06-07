@@ -188,3 +188,6 @@ elif [ -e ~/.bash_profile ]; then
 elif [ -e /etc/bash_profile ]; then
     . /etc/bash_profile
 fi
+
+# create temp directory
+[ ! -d /tmp ] && mkdir /tmp
