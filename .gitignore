@@ -1,8 +1,9 @@
 GitPortable/App/Git
 GitPortable/Data
 
-# App installers
+# binaries
 GitPortable_*.paf.exe
+PortableGit-*.7z*
 
 # Windows junk
 Thumbs.db
