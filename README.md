@@ -10,11 +10,13 @@ __[Download the latest version of Git Portable](https://github.com/sheabunge/Git
 
 The preferred method of installing Git Portable is the `.paf.exe` installer ([why?](https://portableapps.com/about/what_is_a_portable_app#whypaf)). It will download Git for Windows as part of the install process.
 
-However, you can also install Git Portable manually:
+### Manual Installation
+
+If you prefer, you can alternatively install Git Portable manually:
 
 1. Copy the `GitPortable` directory from this repository to a location of your choice.
 2. Download Git for Windows Portable ("thumbdrive edition") from <https://git-scm.com/download/win> and extract it to the `GitPortable\App\Git` directory.
-3. Run the following command to complete installation:
+3. Run the following command to complete the installation:
 ```
 "GitPortable\App\Git\git-bash.exe" --no-needs-console --hide --no-cd --command=post-install.bat
 ```
