@@ -1,10 +1,10 @@
 # Git Portable
 
-Git Portable is a portable version of [Git for Windows ("thumbdrive edition")](https://git-scm.com/) packaged in [PortableApps.com Format](http://portableapps.com/about/what_is_a_portable_app).
+Git Portable is a portable version of [Git for Windows](https://git-scm.com/) packaged in [PortableApps.com Format](http://portableapps.com/about/what_is_a_portable_app).
 
 [Visit Git Portable Homepage at PortableApps.com](https://portableapps.com/node/34685)
 
-[Download Git Portable 2.27.0 Development Test 1](https://github.com/sheabunge/GitPortable/releases/latest)
+__[Download the latest version of Git Portable](https://github.com/sheabunge/GitPortable/releases/latest)__
 
 ## Installing
 
